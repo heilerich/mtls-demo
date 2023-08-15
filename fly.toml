@@ -1,0 +1,31 @@
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  EMAIL = "changeme@example.com"
+
+[[mounts]]
+  source = "mtls_demo"
+  destination = "/work"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 8080
+
+  [[services.ports]]
+    port = 80
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 8443
+
+  [[services.ports]]
+    port = 443
+
+[checks]
+  [checks.http_reachable]
+    port = 8080
+    type = "http"
+    interval = "10s"
+    method = "get"
+    path = "/health"
